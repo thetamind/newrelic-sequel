@@ -89,7 +89,9 @@ module NewRelic
 
           metrics = ["ActiveRecord/#{operation}", 'ActiveRecord/all']
           metrics.each do |metric|
-            NewRelic::Agent.instance.stats_engine.get_stats_no_scope(metric).trace_call(duration)
+            NewRelic::Agent.instance.sql_sampler.notice_sql(sql, metric,
+                                                     nil, duration)
+            # NewRelic::Agent.instance.stats_engine.get_stats_no_scope(metric).trace_call(duration)
           end
         ensure
           log_duration_without_newrelic_instrumentation(duration, sql)
