@@ -108,6 +108,10 @@ DependencyDetection.defer do
   end
 
   executes do
+    NewRelic::Agent.logger.debug 'Installing Sequel instrumentation'
+  end
+
+  executes do
     ::Sequel::Database.class_eval do
       include ::NewRelic::Agent::Instrumentation::SequelInstrumentation
     end
