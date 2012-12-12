@@ -74,7 +74,7 @@ module NewRelic
 
         def log_duration_with_newrelic_instrumentation(duration, sql)
           return unless NewRelic::Agent.is_execution_traced?
-          return unless operation = case sql
+          return unless operation = case sql[0...12]
                                       when /^\s*select/i then
                                         'find'
                                       when /^\s*(update|insert)/i then
